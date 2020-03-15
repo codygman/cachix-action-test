@@ -13,8 +13,6 @@ jobs:
         name: codygman-test-cachix-action
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
         skipNixBuild: true
-    - name: Build custom emacs
-      run: nix-build emacs.nix | cachix push codygman-test-cachix-action
     - name: Home manager install
       run: |
         nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
