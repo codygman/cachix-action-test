@@ -1,0 +1,37 @@
+#+TITLE: Emacs Config
+* Package install and configuration
+** evil
+*** install and configure
+#+begin_src emacs-lisp
+(use-package evil
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  ;; make * over a symbol look for other instances
+  (setq evil-symbol-word-search t)
+  :config
+  (evil-set-initial-state 'org-agenda-mode 'normal)
+  (evil-mode 1))
+#+end_src
+*** evil-collection
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :init
+    (setq evil-collection-outline-bind-tab-p nil)
+          :config
+    (evil-collection-init))
+#+end_src
+*** evil magit
+#+begin_src emacs-lisp
+(use-package evil-magit :after (evil magit) :config (evil-magit-init))
+#+end_src
+** magit
+#+begin_src emacs-lisp
+(use-package magit
+  :defer t
+  :commands (magit-toplevel magit-status magit-blame magit-log)
+  :defer t
+  :config
+  (setq magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1))
+#+end_src
