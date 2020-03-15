@@ -29,4 +29,4 @@ jobs:
           export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
           export PATH=$HOME/.nix-profile/bin:$PATH
           home-manager switch
-          emacs -nw --load load-init-then-run-ert.el
+          ~/.nix-profile/bin/emacs -nw --load load-init-then-run-ert.el
