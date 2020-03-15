@@ -27,4 +27,5 @@ jobs:
     - name: Run emacs user tests
       run: |
         export PATH=$HOME/.nix-profile/bin:$PATH
+        home-manager switch
         emacs -nw --load load-init-then-run-ert.el
