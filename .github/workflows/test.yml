@@ -17,12 +17,11 @@ jobs:
       run: |
         nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
         nix-channel --update
-        echo "NIX_PATH before: $NIX_PATH"
         export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-        echo "NIX_PATH after: $NIX_PATH"
         nix-shell '<home-manager>' -A install
     - name: Home manager switch to my config
       run: |
+        export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
         ln -s nixpkgs ~/.config/nixpkgs
         home-manager switch
     - name: Run emacs user tests
