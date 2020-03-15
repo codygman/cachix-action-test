@@ -13,3 +13,5 @@ jobs:
         name: codygman-test-cachix-action
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
         skipNixBuild: true
+    - name: build custom emacs
+      run: nix-build emacs.nix
