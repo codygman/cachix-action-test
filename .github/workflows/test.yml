@@ -15,3 +15,4 @@ jobs:
         skipNixBuild: true
     - name: Build custom emacs
       run: nix-build emacs.nix | cachix push codygman-test-cachix-action
+
