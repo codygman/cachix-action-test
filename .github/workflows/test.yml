@@ -6,26 +6,29 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v8
-    - uses: cachix/cachix-action@v5
-      with:
-        name: codygman-test-cachix-action
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-        skipNixBuild: true
-    - name: Home manager install
-      run: |
-        nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
-        nix-channel --update
-        export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-        nix-shell '<home-manager>' -A install
-    - name: Home manager switch to my config
-      run: |
-        export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-        ln -s nixpkgs ~/.config/nixpkgs
-        home-manager switch
-    - name: Run emacs user tests
-      run: |
-        export PATH=$HOME/.nix-profile/bin:$PATH
-        home-manager switch
-        emacs -nw --load load-init-then-run-ert.el
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v8
+      - uses: cachix/cachix-action@v5
+        with:
+          name: codygman-test-cachix-action
+          signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+          skipNixBuild: true
+      - name: Home manager install
+        run: |
+          nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
+          nix-channel --update
+          export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+          nix-shell '<home-manager>' -A install
+      - name: Home manager switch to my config
+        needs: "Home manager install"
+        run: |
+          export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+          ln -s nixpkgs ~/.config/nixpkgs
+          home-manager switch
+      - name: Run emacs user tests
+        needs: "Home manager switch to my config"
+        run: |
+          export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+          export PATH=$HOME/.nix-profile/bin:$PATH
+          home-manager switch
+          emacs -nw --load load-init-then-run-ert.el
