@@ -15,11 +15,15 @@ jobs:
         skipNixBuild: true
     - name: Build custom emacs
       run: nix-build emacs.nix | cachix push codygman-test-cachix-action
-    - name: Home manager install and switch
+    - name: Home manager install
       run: |
         nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
         nix-channel --update
         export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-        nix-shell '<home-manager>' -A install
+     - name: Home manager switch to my config
+      run: |
+        rm -v ~/.config/nixpkgs
+        ln -s nixpkgs ~/.config/nixpkgs
+        home-manager switch
     - name: Run emacs user tests
       run: emacs -nw --load load-init-then-run-ert.el
