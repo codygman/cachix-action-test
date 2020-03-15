@@ -1,2 +1,8 @@
+(require 'ert)
+(require 'ert-x)
 (ert-deftest version-check ()
   (should (string-equal "27.0.50" emacs-version)))
+(ert-deftest evil-installed ()
+  (should (fboundp 'evil-version)))
+(ert-deftest evil-collection-installed ()
+  (should (fboundp 'evil-collection-init)))

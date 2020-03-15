@@ -16,8 +16,9 @@ jobs:
     - name: Build custom emacs
       run: nix-build emacs.nix | cachix push codygman-test-cachix-action
     - name: Home manager install and switch
-      run: nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
-      run: nix-channel --update
-      run: nix-shell '<home-manager>' -A install
+      run: |
+        nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
+        nix-channel --update
+        nix-shell '<home-manager>' -A install
     - name: Run emacs user tests
       run: emacs -nw --load load-init-then-run-ert.el
