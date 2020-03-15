@@ -22,7 +22,6 @@ jobs:
         export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
     - name: Home manager switch to my config
       run: |
-        rm -v ~/.config/nixpkgs
         ln -s nixpkgs ~/.config/nixpkgs
         home-manager switch
     - name: Run emacs user tests
