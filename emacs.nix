@@ -26,6 +26,7 @@ stdenv.lib.overrideDerivation (pkgs.emacs.override {
   src = fetchFromGitHub {
     owner = "emacs-mirror";
     repo = "emacs";
+    # TODO change to offical emacs 27.0.90 release: c5f255d68156926923232b1edadf50faac527861
     rev = "9cd3b50ca869e6a91668eb8bbc2a44617294b85c";
     sha256 = "0xdpyy04mik1bsib0x894gi1ib1w40s019kzqfvjjmqgsbvi7a9a";
   };
