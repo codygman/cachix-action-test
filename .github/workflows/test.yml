@@ -15,5 +15,7 @@ jobs:
         skipNixBuild: true
     - name: Build custom emacs
       run: nix-build emacs.nix | cachix push codygman-test-cachix-action
+    - name: Home manager switch
+      run: emacs -nw --load load-init-then-run-ert.el
     - name: Run emacs user tests
       run: emacs -nw --load load-init-then-run-ert.el
