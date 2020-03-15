@@ -16,10 +16,11 @@ jobs:
     - name: Build custom emacs
       run: nix-build emacs.nix | cachix push codygman-test-cachix-action
     - name: Home manager install
+      env:
+        NIX_PATH: $HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
       run: |
         nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
         nix-channel --update
-        export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
         nix-shell '<home-manager>' -A install
     - name: Home manager switch to my config
       run: |
