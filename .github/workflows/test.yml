@@ -20,13 +20,11 @@ jobs:
           export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
           nix-shell '<home-manager>' -A install
       - name: Home manager switch to my config
-        needs: "Home manager install"
         run: |
           export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
           ln -s nixpkgs ~/.config/nixpkgs
           home-manager switch
       - name: Run emacs user tests
-        needs: "Home manager switch to my config"
         run: |
           export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
           export PATH=$HOME/.nix-profile/bin:$PATH
